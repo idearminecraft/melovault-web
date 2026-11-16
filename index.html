@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Melo Vault</title>
+<meta name="description" content="ดาวน์โหลด Melo Vault · ดูบอร์ดอันดับและโปรไฟล์ผู้ใช้">
+<meta name="theme-color" content="#062A6B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%230068B5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#062A6B; --navy-2:#0A3A8C; --blue:#0068B5; --cyan:#00C7FD; --violet:#6E5BFF; --gold:#FFB020;
+  --paper:#F2F6FC; --card:#FFFFFF; --ink:#0C1B33; --ink-2:#4A5A75; --line:#DCE5F2;
+  --side:252px; --r-lg:22px; --r-md:14px; --r-sm:10px;
+  --display:"Bai Jamjuree", "IBM Plex Sans Thai", system-ui, sans-serif;
+  --body:"IBM Plex Sans Thai", system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:2px;border-radius:6px}
+img{display:block}
+
+/* ---------- โครงหน้า: แถบข้าง (คอม) / แถบบน + เมนูแฮมเบอร์เกอร์ (มือถือ) ---------- */
+.side{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--navy);color:#fff;display:flex;flex-direction:column;padding:22px 16px;z-index:30}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;padding:4px 8px 22px}
+.brand svg{width:34px;height:34px;flex:none}
+.brand b{font:700 21px/1 var(--display);letter-spacing:.2px}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav a{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;text-decoration:none;color:#C9D8F2;font-weight:500}
+.nav a svg{width:20px;height:20px;flex:none;opacity:.9}
+.nav a:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav a[aria-current="page"]{background:linear-gradient(90deg,rgba(0,199,253,.22),rgba(110,91,255,.12));color:#fff}
+.side-foot{margin-top:auto;padding:14px 10px 4px;font-size:13px;color:#8FA6CF}
+.side-dl{display:block;text-align:center;margin:0 0 14px;padding:12px;border-radius:14px;background:var(--cyan);color:var(--navy);text-decoration:none;font:700 15px/1.2 var(--display)}
+.top{display:none}
+.scrim{display:none}
+main{margin-left:var(--side);min-height:100vh}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 36px 64px}
+
+@media (max-width: 900px){
+  .side{transform:translateX(-102%);transition:transform .25s ease;width:280px;box-shadow:0 0 40px rgba(0,0,0,.3)}
+  body.menu .side{transform:none}
+  body.menu .scrim{display:block;position:fixed;inset:0;background:rgba(6,20,50,.45);z-index:25}
+  .top{display:flex;position:sticky;top:0;z-index:20;align-items:center;gap:10px;padding:10px 12px;padding-top:max(10px,env(safe-area-inset-top));background:var(--navy);color:#fff}
+  .top .brand{padding:0}
+  .top .brand b{font-size:18px}
+  .burger{width:42px;height:42px;border:0;background:rgba(255,255,255,.08);border-radius:12px;display:grid;place-items:center;cursor:pointer}
+  .burger svg{width:22px;height:22px}
+  main{margin-left:0}
+  .wrap{padding:20px 16px 48px}
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important;animation:none!important} }
+
+/* ---------- ตัวอักษร ---------- */
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0}
+h2{font-size:26px;font-weight:700;margin-bottom:14px}
+.muted{color:var(--ink-2)}
+
+/* ---------- หน้าแรก: ฮีโร่ ---------- */
+.hero{position:relative;overflow:hidden;border-radius:28px;color:#fff;padding:44px 44px 0;
+  background:radial-gradient(120% 90% at 85% 0%,rgba(0,199,253,.45),transparent 55%),radial-gradient(90% 80% at 0% 100%,rgba(110,91,255,.55),transparent 60%),linear-gradient(160deg,var(--navy-2),var(--navy) 70%)}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:end;position:relative;z-index:1}
+.hero h1{font-size:clamp(44px,7vw,84px);font-weight:700;letter-spacing:-1px;line-height:.95}
+.hero .ver{display:inline-flex;align-items:center;gap:8px;margin:18px 0 6px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.12);font-weight:600;font-size:15px}
+.hero .ver i{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(0,199,253,.25)}
+.hero p.lead{font-size:18px;color:#D6E3FA;max-width:30em;margin:12px 0 26px}
+.dl{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:14px 20px 14px 16px;border-radius:16px;text-decoration:none;border:0;cursor:pointer;font:600 16px/1.2 var(--display);transition:transform .15s ease, box-shadow .15s ease}
+.btn svg{width:28px;height:28px;flex:none}
+.btn small{display:block;font:500 12px/1.3 var(--body);opacity:.8}
+.btn-android{background:#fff;color:var(--navy);box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.btn-android:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.24)}
+.btn-ios{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn-ios[aria-disabled="true"]{cursor:default;opacity:.75}
+.btn-ios:not([aria-disabled="true"]):hover{background:rgba(255,255,255,.18)}
+.users{background:rgba(6,20,60,.35);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:22px 24px;margin-bottom:34px;backdrop-filter:blur(6px)}
+.users .n{font:700 clamp(40px,5vw,58px)/1 var(--display);letter-spacing:-1px}
+.users .l{color:#C9D8F2;margin-top:6px}
+.users .row{display:flex;gap:22px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
+.users .row b{display:block;font:700 22px/1.1 var(--display)}
+.users .row span{font-size:13px;color:#AFC3E6}
+/* บันไดแรงค์ 34 ขั้น = คลื่นเสียง */
+.ladder{position:relative;z-index:1;display:flex;align-items:flex-end;gap:5px;height:120px;margin-top:30px}
+.ladder span{flex:1;border-radius:5px 5px 0 0;background:linear-gradient(180deg,var(--c1),var(--c2));transform-origin:bottom;animation:rise .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 22ms)}
+@keyframes rise{from{transform:scaleY(.04)}to{transform:scaleY(1)}}
+
+/* ---------- ส่วนอื่นของหน้าแรก ---------- */
+.home-cols{display:grid;grid-template-columns:1.3fr 1fr;gap:22px;margin-top:28px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px}
+.panel-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px}
+.panel-h h2{margin:0;font-size:21px}
+.panel-h a{font-weight:600;color:var(--blue);text-decoration:none;font-size:15px}
+.feat{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.feat li{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:start}
+.feat .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:#fff}
+.feat b{font-family:var(--display);font-size:17px;display:block}
+.feat span{color:var(--ink-2);font-size:14.5px}
+.steps{margin:0;padding-left:20px;color:var(--ink-2);font-size:14.5px}
+.steps li{margin:4px 0}
+
+/* ---------- แถวผู้ใช้ ---------- */
+.rows{display:flex;flex-direction:column}
+.urow{display:grid;grid-template-columns:38px 44px 1fr auto;gap:12px;align-items:center;padding:10px 6px;border-radius:12px;text-decoration:none}
+.urow:hover{background:#EEF4FD}
+.urow + .urow{border-top:1px solid #EEF2F8}
+.pos{font:700 17px/1 var(--display);color:var(--ink-2);text-align:center}
+.av{width:44px;height:44px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff;display:grid;place-items:center;font:700 18px/1 var(--display);flex:none;overflow:hidden}
+.who{min-width:0}
+.who > b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.who > span{display:block;font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.val{font:700 17px/1 var(--display);text-align:right}
+.val small{display:block;font:500 12px/1.4 var(--body);color:var(--ink-2)}
+.tier{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;background:#E8F0FD;color:var(--blue)}
+.vip{display:inline-block;margin-left:6px;padding:0 6px;border-radius:6px;font-size:11px;font-weight:700;background:var(--gold);color:#3A2600;vertical-align:2px}
+
+/* ---------- บอร์ด ---------- */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:18px;scrollbar-width:none}
+.tabs a{flex:none;padding:9px 16px;border-radius:999px;text-decoration:none;font-weight:600;background:var(--card);border:1px solid var(--line);color:var(--ink-2)}
+.tabs a[aria-current="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:14px;align-items:end;margin-bottom:18px}
+.pod{text-decoration:none;text-align:center;border-radius:20px;padding:18px 12px 16px;color:#fff;position:relative}
+.pod .av{width:64px;height:64px;margin:0 auto 10px;border:3px solid rgba(255,255,255,.85);font-size:24px}
+.pod b{display:block;font-family:var(--display);font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pod .v{font:700 22px/1.2 var(--display)}
+.pod .p{position:absolute;top:10px;left:14px;font:700 26px/1 var(--display);opacity:.55}
+.pod.p1{background:linear-gradient(160deg,#FFC24D,#F08A00);padding-top:30px}
+.pod.p1 .av{width:80px;height:80px}
+.pod.p2{background:linear-gradient(160deg,var(--blue),var(--navy-2))}
+.pod.p3{background:linear-gradient(160deg,var(--violet),#3F2FB8)}
+
+/* ---------- โปรไฟล์ ---------- */
+.cover{height:210px;border-radius:24px;background:linear-gradient(135deg,var(--navy-2),var(--violet));background-size:cover;background-position:center;position:relative}
+.cover::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,transparent 40%,rgba(6,20,60,.45))}
+.phead{display:flex;gap:20px;align-items:flex-start;margin:-58px 0 0 28px;position:relative;z-index:1;flex-wrap:wrap}
+.phead .av{width:120px;height:120px;border:5px solid var(--paper);font-size:44px}
+.phead h1{font-size:34px}
+.phead > div{padding-top:66px;min-width:0}
+.phead .handle{color:var(--ink-2)}
+.title-chip{display:inline-block;margin-top:6px;padding:3px 12px;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));color:#fff;font-size:13px;font-weight:600}
+.bio{margin:18px 0 0;max-width:60ch;white-space:pre-wrap}
+.pgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;margin-top:24px}
+.rankcard{border-radius:var(--r-lg);padding:22px;color:#fff;background:radial-gradient(100% 120% at 100% 0%,rgba(0,199,253,.4),transparent 60%),linear-gradient(150deg,var(--navy-2),var(--navy))}
+.rankcard .rn{font:700 38px/1 var(--display);margin:6px 0 4px}
+.bar{height:10px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden;margin:16px 0 8px}
+.bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--cyan),var(--violet))}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:16px}
+.stat b{display:block;font:700 26px/1.1 var(--display)}
+.stat span{color:var(--ink-2);font-size:14px}
+.days{display:flex;align-items:flex-end;gap:6px;height:130px;margin-top:8px}
+.days div{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.days i{width:100%;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,var(--cyan),var(--blue));min-height:3px}
+.days span{font-size:11px;color:var(--ink-2)}
+
+/* ---------- ค้นหา / ระดับ ---------- */
+.search{display:flex;gap:10px;margin-bottom:18px}
+.search input{flex:1;min-width:0;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--card);font:inherit;color:var(--ink)}
+.search input:focus{outline:3px solid rgba(0,199,253,.5);border-color:var(--cyan)}
+.search button{padding:0 22px;border:0;border-radius:14px;background:var(--blue);color:#fff;font:600 16px/1 var(--display);cursor:pointer}
+.tiers{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.tierbox{border-radius:var(--r-md);padding:14px 16px;color:#fff}
+.tierbox b{display:block;font:700 19px/1.2 var(--display)}
+.tierbox span{font-size:13px;opacity:.85}
+
+.empty,.err{padding:36px 10px;text-align:center;color:var(--ink-2)}
+.skel{height:56px;border-radius:12px;background:linear-gradient(90deg,#E7EEF8,#F3F7FD,#E7EEF8);background-size:200% 100%;animation:sh 1.2s linear infinite;margin:6px 0}
+@keyframes sh{to{background-position:-200% 0}}
+.foot{margin-top:40px;color:var(--ink-2);font-size:13px}
+
+@media (max-width: 900px){
+  .hero{padding:28px 20px 0;border-radius:22px}
+  .hero-grid{grid-template-columns:1fr;gap:6px}
+  .users{margin-bottom:6px}
+  .ladder{height:76px;gap:3px;margin-top:22px}
+  .home-cols,.pgrid{grid-template-columns:1fr}
+  .podium{gap:8px}
+  .pod{padding:14px 6px 12px}
+  .pod .av{width:48px;height:48px;font-size:18px}
+  .pod.p1 .av{width:60px;height:60px}
+  .pod b{font-size:14px}
+  .pod .v{font-size:17px}
+  .cover{height:150px;border-radius:18px}
+  .phead{margin:-46px 0 0 14px;gap:12px}
+  .phead > div{padding-top:52px}
+  .phead .av{width:92px;height:92px;font-size:34px}
+  .phead h1{font-size:26px}
+  .btn{flex:1 1 220px}
+  .urow{grid-template-columns:30px 40px 1fr auto;gap:10px}
+  .av{width:40px;height:40px}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M23.09,7.66L22.88,7.51L22.42,7.30L21.49,7.09L20.99,7.04L19.97,7.04L19.45,7.07L19.40,7.10L19.43,7.20L19.58,7.35L20.48,7.35L21.18,7.45L21.67,7.58L22.00,7.72L22.26,7.90L22.46,8.12L22.57,8.35L22.60,8.61L22.52,9.05L22.42,9.28L22.11,9.75L21.31,10.59L20.46,11.22L20.43,11.19L20.30,10.13L19.96,8.97L19.42,7.89L18.88,7.14L18.88,6.58L18.73,6.15L18.55,5.88L18.34,5.66L18.09,5.50L17.70,5.35L17.49,5.32L16.90,5.37L15.80,4.81L15.12,4.57L14.20,4.32L13.17,4.18L12.35,4.14L11.44,4.22L10.45,4.42L9.57,4.72L8.54,5.21L8.03,5.50L7.40,5.94L6.61,6.61L6.22,7.02L5.86,7.48L5.27,8.48L4.88,9.47L4.58,10.75L4.49,11.91L3.05,12.99L2.54,13.45L1.92,14.12L1.43,14.85L1.23,15.33L1.17,15.67L1.17,15.98L1.23,16.23L1.41,16.52L1.74,16.82L2.13,17.01L2.75,17.18L3.51,17.26L4.81,17.22L5.97,17.08L7.23,16.83L7.35,16.72L8.71,16.39L11.06,15.65L13.41,14.80L15.54,13.92L15.79,11.88L15.92,10.39L15.83,10.44L13.05,13.79L12.87,13.97L12.71,14.07L12.45,14.15L12.17,14.15L11.91,14.07L11.60,13.81L9.34,10.19L9.28,10.16L7.54,15.82L7.38,16.24L6.07,16.49L5.19,16.59L4.18,16.60L3.75,16.57L3.11,16.44L2.57,16.19L2.30,15.93L2.16,15.70L2.12,15.51L2.12,15.25L2.26,14.79L2.41,14.49L2.70,14.07L3.41,13.32L4.47,12.45L4.54,12.48L4.65,13.41L4.94,14.48L5.09,14.87L5.16,14.94L5.30,14.94L5.37,14.89L7.79,7.40L7.95,7.10L8.21,6.87L8.53,6.73L9.03,6.69L9.36,6.78L9.72,6.99L10.08,7.36L10.50,7.99L12.43,11.06L12.52,11.13L14.17,9.06L16.49,6.29L16.70,6.09L16.96,5.94L17.16,5.89L17.57,5.89L17.91,6.04L18.21,6.32L18.34,6.61L18.29,7.66L17.81,12.83L17.88,12.86L18.55,12.50L20.38,11.37L20.43,11.42L20.45,11.93L20.28,12.06L19.33,12.60L17.75,13.41L17.70,13.38L17.70,13.02L17.44,13.10L17.08,13.32L17.08,13.37L17.31,13.59L17.42,13.61L17.63,13.53L17.67,13.56L17.36,16.44L17.26,16.78L17.09,17.11L16.78,17.57L16.33,18.04L15.79,18.43L15.20,18.71L14.54,18.86L13.90,18.86L13.38,18.71L12.99,18.47L12.74,18.19L12.61,17.96L12.52,17.57L12.53,17.22L12.66,16.80L12.92,16.37L13.28,16.00L13.89,15.61L14.77,15.31L15.41,15.26L15.49,14.49L15.44,14.48L13.79,15.16L11.04,16.19L8.95,16.88L7.84,17.18L7.64,17.31L7.53,17.58L7.54,17.75L7.63,17.93L7.99,18.25L8.67,18.73L9.78,19.30L10.59,19.60L11.04,19.71L12.19,19.87L13.27,19.86L14.53,19.64L15.43,19.35L16.44,18.88L16.91,18.58L17.50,18.14L18.21,17.47L18.68,16.90L19.07,16.34L19.71,15.20L20.10,14.20L20.40,12.92L20.48,11.94L21.12,11.52L21.98,10.85L22.47,10.39L23.09,9.65Z"/></symbol>
+</svg>
+
+<header class="top">
+  <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="side">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <a class="brand" href="#/"><svg><use href="#logo"/></svg><b>Melo Vault</b></a>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<aside class="side" id="side" aria-label="เมนู">
+  <a class="brand" href="#/"><svg style="color:var(--cyan)"><use href="#logo"/></svg><b>Melo Vault</b></a>
+  <nav class="nav">
+    <a href="#/" data-r="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>ดาวน์โหลด</a>
+    <a href="#/board" data-r="board"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V11M12 21V4M18 21v-7"/></svg>บอร์ดอันดับ</a>
+    <a href="#/search" data-r="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>ค้นหาผู้ใช้</a>
+    <a href="#/ranks" data-r="ranks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg>ระดับแรงค์</a>
+  </nav>
+  <div class="side-foot">
+    <a class="side-dl" href="#/" data-dl-android>ดาวน์โหลดแอป</a>
+    <div id="sideVer">Melo Vault</div>
+  </div>
+</aside>
+
+<main id="main"><div class="wrap" id="view"></div></main>
+
+<script>
+// ---------- ตั้งค่า (publishable key ใส่หน้าเว็บได้ ทุกตารางเปิด RLS) ----------
+const SUPA = "https://dgsuvratzjyuixjkrqsm.supabase.co";
+const KEY = "sb_publishable_y1srOJqCWGsaU0mpoc_TKQ_UBNUJ6Pp";
+const DL = os => `${SUPA}/functions/v1/melo-web/download?os=${os}`;
+
+// ต้องตรงกับ Ranks ในแอป
+const RANKS = [["Silent",0],["Hum",60],["Whisper",180],["Murmur",400],["Echo",800],["Tap",1500],["Pulse",2500],["Rhythm",4000],["Groove",6500],["Melody",10000],["Harmony",15000],["Chorus",22000],["Anthem",32000],["Symphony",45000],["Crescendo",65000],["Virtuoso",95000],["Maestro",140000],["Encore",200000],["Legend",300000],["Luminous",370000],["Resonance",450000],["Radiance",560000],["Aurora",700000],["Nova",840000],["Infinity",1000000],["Stardust",1250000],["Cosmos",1600000],["Nebula",2000000],["Celestial",2500000],["Galaxy",3200000],["Mythic",4000000],["Immortal",5500000],["Transcendent",7500000],["Eternal Sound",10000000]];
+const STAR = 500000;
+function rankOf(p){
+  p = Number(p)||0; let i = 0;
+  RANKS.forEach((r,k)=>{ if (p >= r[1]) i = k; });
+  const [name,min] = RANKS[i], next = RANKS[i+1];
+  const span = (next ? next[1] : min*1.5+1) - min;
+  const within = Math.min(Math.max((p-min)/span,0),.9999);
+  const stars = p < RANKS.at(-1)[1] ? 0 : Math.floor((p-RANKS.at(-1)[1])/STAR)+1;
+  return { level:i+1, name, sub:Math.min(3,Math.floor(within*3)+1), next:next?.[0], nextAt:next?.[1],
+    progress: next ? within : ((p-min)%STAR)/STAR, stars };
+}
+// สีตามระดับ: ฟ้า → ม่วง → ทอง
+function tierColor(level, alpha=1){
+  const t = (level-1)/(RANKS.length-1);
+  const stops = [[0,[0,199,253]],[.45,[0,104,181]],[.75,[110,91,255]],[1,[255,176,32]]];
+  let a = stops[0], b = stops.at(-1);
+  for (let k=0;k<stops.length-1;k++) if (t>=stops[k][0] && t<=stops[k+1][0]) { a=stops[k]; b=stops[k+1]; }
+  const f = (t-a[0])/((b[0]-a[0])||1);
+  return `rgba(${a[1].map((v,j)=>Math.round(v+(b[1][j]-v)*f)).join(",")},${alpha})`;
+}
+
+// ---------- ข้อมูล ----------
+async function rpc(fn, args={}){
+  const r = await fetch(`${SUPA}/rest/v1/rpc/${fn}`, { method:"POST",
+    headers:{ apikey:KEY, authorization:`Bearer ${KEY}`, "content-type":"application/json" }, body:JSON.stringify(args) });
+  if (!r.ok) throw new Error(`โหลดข้อมูลไม่ได้ (${r.status})`);
+  return r.json();
+}
+let infoP = null;
+function info(){
+  infoP ??= fetch(`${SUPA}/functions/v1/melo-web/info`, { headers:{ apikey:KEY } }).then(r=>r.ok?r.json():{}).catch(()=>({}));
+  return infoP;
+}
+function fileUrl(path, bucket="avatars"){
+  if (!path) return null;
+  if (path.startsWith("http")) return path;
+  if (path.startsWith("sftp:")) return `${SUPA}/functions/v1/melo-files/f/${path.slice(5)}`;
+  return `${SUPA}/storage/v1/object/public/${bucket}/${path}`;
+}
+
+// ---------- ตัวช่วยวาด ----------
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num = n => Number(n||0).toLocaleString("th-TH", { maximumFractionDigits: 0 });
+function avatar(u){
+  const url = fileUrl(u.avatar), ch = esc((u.name||"?").trim().charAt(0) || "?");
+  return url ? `<img class="av" src="${esc(url)}" alt="" loading="lazy" onerror="this.outerHTML='<span class=&quot;av&quot;>${ch}</span>'">` : `<span class="av">${ch}</span>`;
+}
+function tierChip(points){ const r = rankOf(points); return `<span class="tier" style="background:${tierColor(r.level,.14)};color:${tierColor(r.level)}">${esc(r.name)} ${"I".repeat(r.sub)}</span>`; }
+function userHref(u){ return u.username ? `#/u/${encodeURIComponent(u.username)}` : null; }
+const $ = s => document.querySelector(s);
+const view = $("#view");
+function skel(n=6){ return Array.from({length:n},()=>'<div class="skel"></div>').join(""); }
+
+// ---------- หน้า ----------
+const ORDERS = [["rank","แรงค์"],["today","วันนี้"],["minutes","เวลาฟังรวม"],["credits","เครดิต"],["streak","ต่อเนื่อง"]];
+function valueText(o, v){
+  if (o === "rank") return { v: num(v), s: "แต้ม" };
+  if (o === "credits") return { v: num(v), s: "เครดิต" };
+  if (o === "streak") return { v: num(v), s: "วัน" };
+  return { v: num(v), s: "นาที" };
+}
+
+async function pageHome(){
+  document.title = "Melo Vault — ดาวน์โหลด";
+  const bars = RANKS.map((r,i)=>{
+    const h = 10 + 90 * Math.pow((i+1)/RANKS.length, 1.25);
+    return `<span style="--i:${i};height:${h}%;--c1:${tierColor(i+1)};--c2:${tierColor(Math.max(1,i-3), .35)}" title="${esc(r[0])}"></span>`;
+  }).join("");
+  view.innerHTML = `
+  <section class="hero" aria-labelledby="h1">
+    <div class="hero-grid">
+      <div>
+        <h1 id="h1">Melo Vault</h1>
+        <div class="ver"><i></i><span id="ver">กำลังเช็กเวอร์ชัน…</span></div>
+        <p class="lead">เก็บแต้มไต่แรงค์ 34 ขั้น แต่งโปรไฟล์ แข่งกับเพื่อน และเล่นมินิเกมในแอปเดียว</p>
+        <div class="dl">
+          <a class="btn btn-android" id="dlA" href="${DL("android")}" rel="nofollow">
+            <svg viewBox="0 0 24 24" fill="#3DDC84"><path d="M17.6 9.48l1.84-3.18a.38.38 0 00-.66-.38l-1.86 3.22a11.4 11.4 0 00-9.84 0L5.22 5.92a.38.38 0 10-.66.38L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
+            <span>ดาวน์โหลดสำหรับ Android<small id="dlAsub">ไฟล์ APK</small></span>
+          </a>
+          <a class="btn btn-ios" id="dlI" aria-disabled="true" role="link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.37 12.6c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.89-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.38.81 1.4-.02 2.29-1.27 3.14-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.73-1.05-2.76-4.15zM13.8 4.98c.72-.87 1.2-2.07 1.07-3.27-1.03.04-2.28.69-3.02 1.56-.66.77-1.24 2-1.09 3.18 1.15.09 2.32-.58 3.04-1.47z"/></svg>
+            <span>iOS<small id="dlIsub">เร็ว ๆ นี้</small></span>
+          </a>
+        </div>
+      </div>
+      <div class="users" aria-live="polite">
+        <div class="n" id="users">—</div>
+        <div class="l">ผู้ใช้ทั้งหมด</div>
+        <div class="row">
+          <div><b id="today">—</b><span>เข้าแอปวันนี้</span></div>
+          <div><b id="hours">—</b><span>ชั่วโมงที่ฟังรวมกัน</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ladder" aria-hidden="true">${bars}</div>
+  </section>
+
+  <div class="home-cols">
+    <section class="panel">
+      <div class="panel-h"><h2>อันดับแรงค์ตอนนี้</h2><a href="#/board">ดูบอร์ดทั้งหมด</a></div>
+      <div class="rows" id="top5">${skel(5)}</div>
+    </section>
+    <section class="panel">
+      <div class="panel-h"><h2>ในแอปมีอะไร</h2></div>
+      <ul class="feat">
+        <li><span class="ic" style="background:var(--blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M6 21V11M12 21V4M18 21v-7"/></svg></span><div><b>บอร์ดอันดับ</b><span>แข่งแรงค์ เวลา และเครดิตกับทุกคน รีเซ็ตรายวันให้ลุ้นตลอด</span></div></li>
+        <li><span class="ic" style="background:var(--violet)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg></span><div><b>โปรไฟล์และของตกแต่ง</b><span>กรอบรูป ฉายา พื้นหลัง สกิน สะสมแล้วโชว์ได้</span></div></li>
+        <li><span class="ic" style="background:#F08A00"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="8" cy="9" r="2.5"/><circle cx="16" cy="15" r="2.5"/><rect x="3" y="3" width="18" height="18" rx="4"/></svg></span><div><b>มินิเกม</b><span>ทายเพลง ศึกเพลย์ลิสต์ และหมากล้อม เล่นกับบอทหรือเพื่อน</span></div></li>
+      </ul>
+      <div class="panel-h" style="margin-top:20px"><h2 style="font-size:18px">ติดตั้งบน Android</h2></div>
+      <ol class="steps">
+        <li>กดดาวน์โหลด ไฟล์จะเริ่มโหลดทันที</li>
+        <li>เปิดไฟล์ APK จากแถบแจ้งเตือนหรือโฟลเดอร์ดาวน์โหลด</li>
+        <li>ถ้าเครื่องถาม ให้อนุญาต "ติดตั้งแอปที่ไม่รู้จัก" แล้วกดติดตั้ง</li>
+      </ol>
+    </section>
+  </div>
+  <p class="foot">Melo Vault · ข้อมูลบนเว็บเป็นข้อมูลสาธารณะเดียวกับที่เห็นในแอป</p>`;
+
+  info().then(d => {
+    const v = d.version || d.android?.version;
+    $("#ver") && ($("#ver").textContent = v ? `เวอร์ชันล่าสุด ${v}` : "เวอร์ชันล่าสุด");
+    if (d.android?.updated && $("#dlAsub")) $("#dlAsub").textContent = `ไฟล์ APK · อัปเดต ${d.android.updated}`;
+    if (d.users != null && $("#users")) $("#users").textContent = num(d.users);
+    if ($("#today")) $("#today").textContent = num(d.active_today);
+    if ($("#hours")) $("#hours").textContent = num((d.minutes||0)/60);
+    if (d.ios && $("#dlI")) { const b = $("#dlI"); b.href = DL("ios"); b.removeAttribute("aria-disabled"); $("#dlIsub").textContent = `เวอร์ชัน ${d.ios.version||""}`.trim(); }
+  });
+  try {
+    const list = await rpc("web_board", { p_order:"rank", p_limit:5 });
+    $("#top5").innerHTML = list.length ? list.map((u,i)=>userRow(u,i,"rank")).join("") : `<div class="empty">ยังไม่มีใครติดอันดับ</div>`;
+  } catch(e){ $("#top5") && ($("#top5").innerHTML = `<div class="err">${esc(e.message)}</div>`); }
+}
+
+function userRow(u, i, o){
+  const href = userHref(u), vt = valueText(o, u.value);
+  const tag = href ? "a" : "div";
+  return `<${tag} class="urow" ${href?`href="${href}"`:""}>
+    <span class="pos">${i+1}</span>${avatar(u)}
+    <span class="who"><b>${esc(u.name)}${u.vip?'<span class="vip">VIP</span>':""}</b><span>${u.username?"@"+esc(u.username):"ไม่ระบุตัว"} ${tierChip(u.rank_points)}</span></span>
+    <span class="val">${vt.v}<small>${vt.s}</small></span></${tag}>`;
+}
+
+async function pageBoard(o){
+  if (!ORDERS.some(x=>x[0]===o)) o = "rank";
+  document.title = "บอร์ดอันดับ — Melo Vault";
+  view.innerHTML = `<h2>บอร์ดอันดับ</h2>
+    <nav class="tabs" aria-label="เรียงตาม">${ORDERS.map(([k,l])=>`<a href="#/board/${k}" aria-current="${k===o}">${l}</a>`).join("")}</nav>
+    <div id="pod"></div><section class="panel"><div class="rows" id="list">${skel(8)}</div></section>`;
+  try {
+    const list = await rpc("web_board", { p_order:o, p_limit:50 });
+    if (!list.length) { $("#pod").innerHTML = ""; $("#list").innerHTML = `<div class="empty">ยังไม่มีใครติดอันดับในหมวดนี้</div>`; return; }
+    const top = list.slice(0,3);
+    const podOrder = [1,0,2].filter(i=>top[i]);
+    $("#pod").innerHTML = list.length >= 3 ? `<div class="podium">${podOrder.map(i=>{
+      const u = top[i], vt = valueText(o,u.value), href = userHref(u);
+      return `<${href?"a":"div"} class="pod p${i+1}" ${href?`href="${href}"`:""}><span class="p">${i+1}</span>${avatar(u)}<b>${esc(u.name)}</b><div class="v">${vt.v}</div><small>${vt.s}</small></${href?"a":"div"}>`;
+    }).join("")}</div>` : "";
+    $("#list").innerHTML = list.map((u,i)=>userRow(u,i,o)).join("");
+  } catch(e){ $("#list").innerHTML = `<div class="err">${esc(e.message)} · ลองรีเฟรชหน้าอีกครั้ง</div>`; }
+}
+
+async function pageProfile(username){
+  view.innerHTML = `<div class="cover"></div>${skel(4)}`;
+  let p;
+  try { p = await rpc("web_profile", { p_username: username }); }
+  catch(e){ view.innerHTML = `<div class="err">${esc(e.message)}</div>`; return; }
+  if (!p) { view.innerHTML = `<div class="empty"><h2>ไม่พบผู้ใช้ @${esc(username)}</h2><p>ลองค้นหาด้วยชื่ออื่นในหน้า <a href="#/search">ค้นหาผู้ใช้</a></p></div>`; return; }
+  document.title = `${p.name} — Melo Vault`;
+  const r = rankOf(p.rank_points), bg = fileUrl(p.background);
+  const joined = p.joined ? new Date(p.joined).toLocaleDateString("th-TH", { year:"numeric", month:"long", day:"numeric" }) : "";
+  const days = p.days || [];
+  const max = Math.max(1, ...days.map(d=>d.minutes||0));
+  const stats = p.hide_stats ? `<div class="stat" style="grid-column:1/-1"><b>ซ่อนสถิติ</b><span>เจ้าของโปรไฟล์ตั้งไม่ให้คนอื่นเห็นสถิติ</span></div>` : `
+    <div class="stat"><b>${num(p.minutes)}</b><span>นาทีที่ฟังรวม</span></div>
+    <div class="stat"><b>${num(p.songs)}</b><span>เพลงที่ฟังแล้ว</span></div>
+    <div class="stat"><b>${num(p.streak)}</b><span>วันต่อเนื่อง</span></div>
+    <div class="stat"><b>${num(p.credits)}</b><span>เครดิต</span></div>`;
+  view.innerHTML = `
+    <div class="cover" ${bg?`style="background-image:url('${esc(bg)}')"`:""}></div>
+    <div class="phead">${avatar(p)}
+      <div><h1>${esc(p.name)}${p.vip?'<span class="vip">VIP</span>':""}</h1>
+      <div class="handle">@${esc(p.username)}${joined?` · เข้าร่วม ${esc(joined)}`:""}</div>
+      ${p.title?`<span class="title-chip">${esc(p.title)}</span>`:""}</div>
+    </div>
+    ${p.bio?`<p class="bio">${esc(p.bio)}</p>`:""}
+    <div class="pgrid">
+      <section class="rankcard" aria-label="แรงค์">
+        <div style="opacity:.8">แรงค์ ${p.rank_pos?`· อันดับที่ ${num(p.rank_pos)}`:""}</div>
+        <div class="rn"><i style="display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:10px;vertical-align:4px;background:${tierColor(r.level)};box-shadow:0 0 0 4px ${tierColor(r.level,.3)}"></i>${esc(r.name)} ${"I".repeat(r.sub)}${r.stars?` ${"★".repeat(Math.min(r.stars,5))}${r.stars>5?"+"+(r.stars-5):""}`:""}</div>
+        <div>${num(p.rank_points)} แต้ม</div>
+        <div class="bar"><i style="width:${(r.progress*100).toFixed(1)}%"></i></div>
+        <div style="font-size:14px;opacity:.85">${r.next?`อีก ${num(r.nextAt - p.rank_points)} แต้มถึง ${esc(r.next)}`:"ขั้นสูงสุดแล้ว เก็บดาวต่อได้เรื่อย ๆ"}</div>
+        <div style="display:flex;gap:22px;margin-top:18px">
+          <div><b style="font:700 20px/1 var(--display)">${num(p.friends)}</b><div style="font-size:13px;opacity:.8">เพื่อน</div></div>
+          <div><b style="font:700 20px/1 var(--display)">${num(p.items)}</b><div style="font-size:13px;opacity:.8">ของสะสม</div></div>
+        </div>
+      </section>
+      <div class="stats">${stats}</div>
+    </div>
+    ${!p.hide_stats && days.length ? `<section class="panel" style="margin-top:20px"><div class="panel-h"><h2 style="font-size:19px">14 วันที่ผ่านมา</h2><span class="muted" style="font-size:14px">นาทีต่อวัน</span></div>
+      <div class="days">${days.map(d=>{ const dt = new Date(d.day+"T00:00:00"); return `<div title="${num(d.minutes)} นาที"><i style="height:${Math.max(2,(d.minutes||0)/max*100)}%"></i><span>${dt.getDate()}</span></div>`; }).join("")}</div></section>` : ""}`;
+}
+
+function pageSearch(q=""){
+  document.title = "ค้นหาผู้ใช้ — Melo Vault";
+  view.innerHTML = `<h2>ค้นหาผู้ใช้</h2>
+    <form class="search" id="sf" role="search"><input id="q" name="q" placeholder="ชื่อหรือ @ยูสเซอร์เนม อย่างน้อย 2 ตัวอักษร" value="${esc(q)}" autocomplete="off" aria-label="ชื่อผู้ใช้"><button>ค้นหา</button></form>
+    <section class="panel"><div class="rows" id="res"><div class="empty">พิมพ์ชื่อแล้วกดค้นหา</div></div></section>`;
+  const run = async (s) => {
+    s = s.trim().replace(/^@/,"");
+    if (s.length < 2) { $("#res").innerHTML = `<div class="empty">พิมพ์อย่างน้อย 2 ตัวอักษร</div>`; return; }
+    $("#res").innerHTML = skel(4);
+    try {
+      const l = await rpc("web_search", { p_q: s });
+      $("#res").innerHTML = l.length ? l.map(u=>`<a class="urow" href="${userHref(u)}" style="grid-template-columns:44px 1fr auto">${avatar(u)}<span class="who"><b>${esc(u.name)}</b><span>@${esc(u.username)}</span></span>${tierChip(u.rank_points)}</a>`).join("") : `<div class="empty">ไม่พบผู้ใช้ชื่อ "${esc(s)}"</div>`;
+    } catch(e){ $("#res").innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+  };
+  $("#sf").addEventListener("submit", e => { e.preventDefault(); const v = $("#q").value; history.replaceState(null,"",`#/search/${encodeURIComponent(v)}`); run(v); });
+  if (q) run(q); else $("#q").focus();
+}
+
+function pageRanks(){
+  document.title = "ระดับแรงค์ — Melo Vault";
+  view.innerHTML = `<h2>ระดับแรงค์</h2><p class="muted" style="margin-top:-6px">34 ขั้น แต่ละขั้นแบ่งเป็น I · II · III เลยขั้นสุดท้ายแล้วได้ดาวทุก ๆ ${num(STAR)} แต้ม</p>
+    <div class="tiers">${RANKS.map((r,i)=>`<div class="tierbox" style="background:linear-gradient(150deg,${tierColor(i+1)},${tierColor(Math.max(1,i-4))})"><span>ขั้น ${i+1}</span><b>${esc(r[0])}</b><span>${num(r[1])} แต้มขึ้นไป</span></div>`).join("")}</div>`;
+}
+
+// ---------- เส้นทาง ----------
+function route(){
+  const h = decodeURIComponent(location.hash.replace(/^#\/?/,""));
+  const [a, ...rest] = h.split("/");
+  const b = rest.join("/");
+  document.body.classList.remove("menu"); $("#burger").setAttribute("aria-expanded","false");
+  const key = a === "u" ? "board" : (a || "home");
+  document.querySelectorAll(".nav a").forEach(x => x.toggleAttribute("aria-current", false) || (x.dataset.r === key && x.setAttribute("aria-current","page")));
+  window.scrollTo(0,0);
+  if (a === "board") return pageBoard(b || "rank");
+  if (a === "u" && b) return pageProfile(b);
+  if (a === "search") return pageSearch(b);
+  if (a === "ranks") return pageRanks();
+  return pageHome();
+}
+window.addEventListener("hashchange", route);
+$("#burger").addEventListener("click", () => { const on = document.body.classList.toggle("menu"); $("#burger").setAttribute("aria-expanded", on); });
+$("#scrim").addEventListener("click", () => document.body.classList.remove("menu"));
+document.addEventListener("keydown", e => { if (e.key === "Escape") document.body.classList.remove("menu"); });
+document.querySelectorAll("[data-dl-android]").forEach(a => a.href = DL("android"));
+info().then(d => { const v = d.version || d.android?.version; if (v) $("#sideVer").textContent = `Melo Vault ${v}`; });
+route();
+</script>
+</body>
+</html>
