@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Melo Vault — ดาวน์โหลดแอป</title>
-<meta name="description" content="ดาวน์โหลด Melo Vault แอปสำหรับ Android และ iOS ไต่แรงค์ 34 ขั้น แต่งโปรไฟล์ แข่งบอร์ดอันดับ และเล่นมินิเกมกับเพื่อน">
+<meta name="description" content="Melo Vault แอปฟังเพลงในเครื่องที่ไม่มีโฆษณาคั่น ไม่มีสปอนเซอร์ เก็บสถิติการฟังทุกนาที แต่งโปรไฟล์ และแข่งอันดับกับคนที่รักเพลงเหมือนกัน">
 <link rel="canonical" href="https://idearminecraft.github.io/melovault-web/">
 <meta name="robots" content="index, follow">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Melo Vault">
 <meta property="og:title" content="Melo Vault — ดาวน์โหลดแอป">
-<meta property="og:description" content="ไต่แรงค์ 34 ขั้น แต่งโปรไฟล์ แข่งบอร์ดอันดับ และเล่นมินิเกมกับเพื่อน">
+<meta property="og:description" content="ฟังเพลงในเครื่องแบบไม่มีโฆษณา เก็บสถิติการฟัง แต่งโปรไฟล์ แล้วแข่งอันดับกับทุกคน">
 <meta property="og:url" content="https://idearminecraft.github.io/melovault-web/">
 <meta property="og:locale" content="th_TH">
 <meta name="twitter:card" content="summary">
@@ -134,8 +134,9 @@ h2{font-size:26px;font-weight:700;margin-bottom:14px}
 .tabs a{flex:none;padding:9px 16px;border-radius:999px;text-decoration:none;font-weight:600;background:var(--card);border:1px solid var(--line);color:var(--ink-2)}
 .tabs a[aria-current="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
 .podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:14px;align-items:end;margin-bottom:18px}
-.pod{text-decoration:none;text-align:center;border-radius:20px;padding:18px 12px 16px;color:#fff;position:relative}
-.pod .av{width:64px;height:64px;margin:0 auto 10px;border:3px solid rgba(255,255,255,.85);font-size:24px}
+.pod{text-decoration:none;text-align:center;border-radius:20px;padding:18px 12px 16px;color:#fff;position:relative;overflow:visible}
+.pod .fav{margin:0 auto 10px}
+.pod .av{width:64px;height:64px;border:3px solid rgba(255,255,255,.85);font-size:24px}
 .pod b{display:block;font-family:var(--display);font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pod .v{font:700 22px/1.2 var(--display)}
 .pod .p{position:absolute;top:10px;left:14px;font:700 26px/1 var(--display);opacity:.55}
@@ -145,12 +146,12 @@ h2{font-size:26px;font-weight:700;margin-bottom:14px}
 .pod.p3{background:linear-gradient(160deg,var(--violet),#3F2FB8)}
 
 /* ---------- โปรไฟล์ ---------- */
-.cover{height:210px;border-radius:24px;background:linear-gradient(135deg,var(--navy-2),var(--violet));background-size:cover;background-position:center;position:relative}
+.cover{height:260px;border-radius:24px;background:linear-gradient(135deg,var(--navy-2),var(--violet));background-size:cover;background-position:center;position:relative}
 .cover::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,transparent 40%,rgba(6,20,60,.45))}
-.phead{display:flex;gap:20px;align-items:flex-start;margin:-58px 0 0 28px;position:relative;z-index:1;flex-wrap:wrap}
+.phead{display:flex;gap:28px;align-items:flex-start;margin:-62px 0 0 72px;position:relative;z-index:1;flex-wrap:wrap}
 .phead .av{width:120px;height:120px;border:5px solid var(--paper);font-size:44px}
 .phead h1{font-size:34px}
-.phead > div{padding-top:66px;min-width:0}
+.phead > div{padding-top:76px;min-width:0}
 .phead .handle{color:var(--ink-2)}
 .title-chip{display:inline-block;margin-top:6px;padding:3px 12px;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));color:#fff;font-size:13px;font-weight:600}
 .bio{margin:18px 0 0;max-width:60ch;white-space:pre-wrap}
@@ -196,13 +197,63 @@ h2{font-size:26px;font-weight:700;margin-bottom:14px}
   .pod b{font-size:14px}
   .pod .v{font-size:17px}
   .cover{height:150px;border-radius:18px}
-  .phead{margin:-46px 0 0 14px;gap:12px}
+  .phead{margin:-46px 0 0 34px;gap:16px}
   .phead > div{padding-top:52px}
   .phead .av{width:92px;height:92px;font-size:34px}
   .phead h1{font-size:26px}
   .btn{flex:1 1 220px}
   .urow{grid-template-columns:30px 40px 1fr auto;gap:10px}
   .av{width:40px;height:40px}
+}
+
+/* ---------- ของตกแต่ง (กรอบรูป ฉายา ป้ายชื่อ พื้นหลัง — ไฟล์ชุดเดียวกับแอป) ---------- */
+.fav{position:relative;display:inline-grid;place-items:center;flex:none}
+.fav .fr{position:absolute;left:50%;top:50%;width:362.5%;height:181.25%;transform:translate(-50%,-50%);pointer-events:none;object-fit:contain;max-width:none}
+.urow .fav .fr{width:250%;height:125%}
+.urow .who,.urow .val{position:relative;z-index:1}
+.urow .who > b,.urow .who > span{text-shadow:0 0 6px #fff,0 0 2px #fff}
+.title-img{display:block;height:30px;margin-top:8px;width:auto}
+.plate{display:inline-block;padding:2px 18px;border-radius:12px;background-size:100% 100%;background-repeat:no-repeat}
+.plate.has{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.45)}
+
+/* ---------- หน้าแรก: เหตุผลที่น่าใช้ ---------- */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.why article{position:relative;overflow:hidden;border-radius:var(--r-lg);padding:24px 22px 22px;background:var(--card);border:1px solid var(--line)}
+.why article::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--acc)}
+.why h3{font-size:21px;margin:14px 0 8px}
+.why p{margin:0;color:var(--ink-2);font-size:15px}
+.why .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--acc) 14%,#fff);color:var(--acc)}
+.why .ic svg{width:26px;height:26px}
+.vs{margin-top:22px;border-radius:var(--r-lg);padding:22px 24px;background:linear-gradient(120deg,#0B2B66,#2A1F7A);color:#fff;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.vs h3{font-size:18px;margin-bottom:8px}
+.vs ul{margin:0;padding-left:18px;color:#D6E3FA;font-size:15px}
+.vs li{margin:3px 0}
+.vs .them{opacity:.65}
+.vs .them h3{text-decoration:line-through;text-decoration-thickness:2px}
+
+/* ---------- โปรไฟล์ ---------- */
+.cover{overflow:hidden}
+.cover video,.cover img.bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.phead .fav{margin-top:0}
+.phead .fav .av{width:120px;height:120px;border:5px solid var(--paper);font-size:44px}
+.show{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.show figure{margin:0;width:78px;text-align:center}
+.show img{width:78px;height:78px;object-fit:contain;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.show figcaption{font-size:12px;color:var(--ink-2);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clips{display:flex;flex-direction:column;gap:8px}
+.clip{display:grid;grid-template-columns:54px 1fr 44px;gap:12px;align-items:center;padding:8px;border-radius:14px;background:#F6F9FE;border:1px solid #E6EDF8}
+.clip img,.clip .cv{width:54px;height:54px;border-radius:10px;object-fit:cover;background:linear-gradient(135deg,var(--blue),var(--violet))}
+.clip b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clip span{display:block;font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clip .pr{height:4px;border-radius:9px;background:#E1E9F6;margin-top:6px;overflow:hidden}
+.clip .pr i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet))}
+.play{width:44px;height:44px;border-radius:50%;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer}
+.play svg{width:20px;height:20px}
+.clip.on{background:#EAF3FF;border-color:#BFD8FA}
+@media (max-width: 900px){
+  .why{grid-template-columns:1fr}
+  .vs{grid-template-columns:1fr}
+  .phead .fav .av{width:92px;height:92px;font-size:34px}
 }
 </style>
 </head>
@@ -235,7 +286,7 @@ h2{font-size:26px;font-weight:700;margin-bottom:14px}
 
 <main id="main"><div class="wrap" id="view">
   <h1>Melo Vault</h1>
-  <p>ดาวน์โหลด Melo Vault สำหรับ Android และ iOS เก็บแต้มไต่แรงค์ 34 ขั้น แต่งโปรไฟล์ แข่งบอร์ดอันดับ และเล่นมินิเกม (ทายเพลง ศึกเพลย์ลิสต์ หมากล้อม) กับเพื่อน</p>
+  <p>Melo Vault แอปฟังเพลงในเครื่องที่ไม่มีโฆษณาคั่น ไม่มีสปอนเซอร์ เก็บสถิติการฟังทุกนาที แต่งโปรไฟล์ และแข่งอันดับกับคนที่รักเพลงเหมือนกัน</p>
 </div></main>
 
 <script>
@@ -286,12 +337,35 @@ function fileUrl(path, bucket="avatars"){
   return `${SUPA}/storage/v1/object/public/${bucket}/${path}`;
 }
 
+// ของตกแต่ง: รายการไฟล์ชุดเดียวกับแอป (deco/manifest.json บน SFTP)
+const DECO = `${SUPA}/functions/v1/melo-files/f/deco/`;
+let decoP = null;
+function deco(){
+  decoP ??= fetch(DECO + "manifest.json").then(r => r.ok ? r.json() : {}).then(j => j.items || {}).catch(() => ({}));
+  return decoP;
+}
+function decoUrl(e, file){ return e && file ? `${DECO}${e.dir}/${file}?v=${e.v}` : null; }
+// ไฟล์รูปของชิ้นนั้น ตามชนิด (กรอบ/ฉายา/ป้าย = รูป ; พื้นหลัง = แนวนอน)
+function decoImg(items, asset, want){
+  const e = asset && items[asset]; if (!e) return null;
+  const f = e.files || {};
+  if (want === "bg") return { img: decoUrl(e, f.landscape || f.portrait || e.main), video: decoUrl(e, f.landscape_video || f.portrait_video) };
+  if (want === "preview") return decoUrl(e, f.preview || f.image || e.main);
+  return decoUrl(e, f.anim || f.image || e.main);
+}
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 // ---------- ตัวช่วยวาด ----------
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const num = n => Number(n||0).toLocaleString("th-TH", { maximumFractionDigits: 0 });
 function avatar(u){
   const url = fileUrl(u.avatar), ch = esc((u.name||"?").trim().charAt(0) || "?");
   return url ? `<img class="av" src="${esc(url)}" alt="" loading="lazy" onerror="this.outerHTML='<span class=&quot;av&quot;>${ch}</span>'">` : `<span class="av">${ch}</span>`;
+}
+/** รูปโปรไฟล์ + กรอบ (ถ้ามี) */
+function favatar(u, items){
+  const fr = items && u.frame ? decoImg(items, u.frame) : null;
+  return `<span class="fav">${avatar(u)}${fr ? `<img class="fr" src="${esc(fr)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</span>`;
 }
 function tierChip(points){ const r = rankOf(points); return `<span class="tier" style="background:${tierColor(r.level,.14)};color:${tierColor(r.level)}">${esc(r.name)} ${"I".repeat(r.sub)}</span>`; }
 function userHref(u){ return u.username ? `#/u/${encodeURIComponent(u.username)}` : null; }
@@ -320,7 +394,7 @@ async function pageHome(){
       <div>
         <h1 id="h1">Melo Vault</h1>
         <div class="ver"><i></i><span id="ver">กำลังเช็กเวอร์ชัน…</span></div>
-        <p class="lead">เก็บแต้มไต่แรงค์ 34 ขั้น แต่งโปรไฟล์ แข่งกับเพื่อน และเล่นมินิเกมในแอปเดียว</p>
+        <p class="lead">เพลงในเครื่องของคุณ ฟังได้ยาวทั้งวันโดยไม่มีโฆษณาคั่นสักวินาที ทุกนาทีที่ฟังกลายเป็นสถิติและแต้ม ไต่แรงค์ 34 ขั้นแข่งกับทุกคนบนบอร์ด</p>
         <div class="dl">
           <a class="btn btn-android" id="dlA" href="${DL("android")}" rel="nofollow">
             <svg viewBox="0 0 24 24" fill="#3DDC84"><path d="M17.6 9.48l1.84-3.18a.38.38 0 00-.66-.38l-1.86 3.22a11.4 11.4 0 00-9.84 0L5.22 5.92a.38.38 0 10-.66.38L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
@@ -344,27 +418,51 @@ async function pageHome(){
     <div class="ladder" aria-hidden="true">${bars}</div>
   </section>
 
+  <section aria-labelledby="whyh" style="margin-top:34px">
+    <h2 id="whyh">ฟังเพลงแบบที่ควรเป็น</h2>
+    <div class="why">
+      <article style="--acc:var(--blue)">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+        <h3>เพลงของคุณ ไม่มีโฆษณาคั่น</h3>
+        <p>เล่นไฟล์เพลงในเครื่องได้ทันที ทั้งอัลบั้ม ทั้งโฟลเดอร์ ไม่มีเสียงโฆษณาแทรกกลางเพลง ไม่มีป๊อปอัปเด้งขึ้นมาตอนเปลี่ยนเพลง</p>
+      </article>
+      <article style="--acc:var(--violet)">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <h3>ไม่มีสปอนเซอร์ ไม่ขายเวลาของคุณ</h3>
+        <p>แอปฟังเพลงทั่วไปหลายตัวหาเงินจากการให้คุณดูโฆษณา Melo Vault ไม่ใช้วิธีนั้น เวลาที่คุณฟังเป็นของคุณ ไม่ใช่ของผู้ลงโฆษณา</p>
+      </article>
+      <article style="--acc:var(--gold)">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0z"/><path d="M17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/></svg></span>
+        <h3>ทุกนาทีนับเป็นสถิติ</h3>
+        <p>เก็บนาทีที่ฟัง เพลงที่ฟัง และวันต่อเนื่อง แปลงเป็นแต้มไต่แรงค์ 34 ขั้น แล้วไปวัดกันบนบอร์ดอันดับ รายวันและตลอดกาล</p>
+      </article>
+    </div>
+    <div class="vs">
+      <div class="them"><h3>แอปฟังเพลงทั่วไป</h3><ul><li>โฆษณาเสียงแทรกระหว่างเพลง</li><li>รายได้มาจากยอดดูโฆษณา</li><li>ฟังไปก็ไม่มีอะไรเก็บไว้</li></ul></div>
+      <div><h3>Melo Vault</h3><ul><li>เล่นเพลงในเครื่องต่อเนื่อง ไม่มีโฆษณา</li><li>ไม่มีสปอนเซอร์ ไม่มีโฆษณาตามตัว</li><li>สะสมสถิติ แต้ม แรงค์ และของตกแต่งโปรไฟล์</li></ul></div>
+    </div>
+  </section>
   <div class="home-cols">
     <section class="panel">
       <div class="panel-h"><h2>อันดับแรงค์ตอนนี้</h2><a href="#/board">ดูบอร์ดทั้งหมด</a></div>
       <div class="rows" id="top5">${skel(5)}</div>
     </section>
     <section class="panel">
-      <div class="panel-h"><h2>ในแอปมีอะไร</h2></div>
-      <ul class="feat">
-        <li><span class="ic" style="background:var(--blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M6 21V11M12 21V4M18 21v-7"/></svg></span><div><b>บอร์ดอันดับ</b><span>แข่งแรงค์ เวลา และเครดิตกับทุกคน รีเซ็ตรายวันให้ลุ้นตลอด</span></div></li>
-        <li><span class="ic" style="background:var(--violet)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg></span><div><b>โปรไฟล์และของตกแต่ง</b><span>กรอบรูป ฉายา พื้นหลัง สกิน สะสมแล้วโชว์ได้</span></div></li>
-        <li><span class="ic" style="background:#F08A00"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="8" cy="9" r="2.5"/><circle cx="16" cy="15" r="2.5"/><rect x="3" y="3" width="18" height="18" rx="4"/></svg></span><div><b>มินิเกม</b><span>ทายเพลง ศึกเพลย์ลิสต์ และหมากล้อม เล่นกับบอทหรือเพื่อน</span></div></li>
-      </ul>
-      <div class="panel-h" style="margin-top:20px"><h2 style="font-size:18px">ติดตั้งบน Android</h2></div>
+      <div class="panel-h"><h2>ติดตั้งบน Android</h2></div>
       <ol class="steps">
         <li>กดดาวน์โหลด ไฟล์จะเริ่มโหลดทันที</li>
         <li>เปิดไฟล์ APK จากแถบแจ้งเตือนหรือโฟลเดอร์ดาวน์โหลด</li>
         <li>ถ้าเครื่องถาม ให้อนุญาต "ติดตั้งแอปที่ไม่รู้จัก" แล้วกดติดตั้ง</li>
       </ol>
+      <a class="btn btn-android" href="${DL("android")}" rel="nofollow" style="margin-top:16px;background:var(--navy);color:#fff;box-shadow:none">
+        <svg viewBox="0 0 24 24" fill="#3DDC84"><path d="M17.6 9.48l1.84-3.18a.38.38 0 00-.66-.38l-1.86 3.22a11.4 11.4 0 00-9.84 0L5.22 5.92a.38.38 0 10-.66.38L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
+        <span>ดาวน์โหลดเลย<small>ฟรี ไม่ต้องสมัครก็ฟังได้</small></span>
+      </a>
     </section>
   </div>
+
   <p class="foot">Melo Vault · ข้อมูลบนเว็บเป็นข้อมูลสาธารณะเดียวกับที่เห็นในแอป</p>`;
+  const items = await deco();
 
   info().then(d => {
     const v = d.version || d.android?.version;
@@ -377,15 +475,15 @@ async function pageHome(){
   });
   try {
     const list = await rpc("web_board", { p_order:"rank", p_limit:5 });
-    $("#top5").innerHTML = list.length ? list.map((u,i)=>userRow(u,i,"rank")).join("") : `<div class="empty">ยังไม่มีใครติดอันดับ</div>`;
+    $("#top5").innerHTML = list.length ? list.map((u,i)=>userRow(u,i,"rank",items)).join("") : `<div class="empty">ยังไม่มีใครติดอันดับ</div>`;
   } catch(e){ $("#top5") && ($("#top5").innerHTML = `<div class="err">${esc(e.message)}</div>`); }
 }
 
-function userRow(u, i, o){
+function userRow(u, i, o, items){
   const href = userHref(u), vt = valueText(o, u.value);
   const tag = href ? "a" : "div";
   return `<${tag} class="urow" ${href?`href="${href}"`:""}>
-    <span class="pos">${i+1}</span>${avatar(u)}
+    <span class="pos">${i+1}</span>${favatar(u, items)}
     <span class="who"><b>${esc(u.name)}${u.vip?'<span class="vip">VIP</span>':""}</b><span>${u.username?"@"+esc(u.username):"ไม่ระบุตัว"} ${tierChip(u.rank_points)}</span></span>
     <span class="val">${vt.v}<small>${vt.s}</small></span></${tag}>`;
 }
@@ -397,26 +495,42 @@ async function pageBoard(o){
     <nav class="tabs" aria-label="เรียงตาม">${ORDERS.map(([k,l])=>`<a href="#/board/${k}" aria-current="${k===o}">${l}</a>`).join("")}</nav>
     <div id="pod"></div><section class="panel"><div class="rows" id="list">${skel(8)}</div></section>`;
   try {
-    const list = await rpc("web_board", { p_order:o, p_limit:50 });
+    const [list, items] = await Promise.all([rpc("web_board", { p_order:o, p_limit:50 }), deco()]);
     if (!list.length) { $("#pod").innerHTML = ""; $("#list").innerHTML = `<div class="empty">ยังไม่มีใครติดอันดับในหมวดนี้</div>`; return; }
     const top = list.slice(0,3);
     const podOrder = [1,0,2].filter(i=>top[i]);
     $("#pod").innerHTML = list.length >= 3 ? `<div class="podium">${podOrder.map(i=>{
       const u = top[i], vt = valueText(o,u.value), href = userHref(u);
-      return `<${href?"a":"div"} class="pod p${i+1}" ${href?`href="${href}"`:""}><span class="p">${i+1}</span>${avatar(u)}<b>${esc(u.name)}</b><div class="v">${vt.v}</div><small>${vt.s}</small></${href?"a":"div"}>`;
+      return `<${href?"a":"div"} class="pod p${i+1}" ${href?`href="${href}"`:""}><span class="p">${i+1}</span>${favatar(u, items)}<b>${esc(u.name)}</b><div class="v">${vt.v}</div><small>${vt.s}</small></${href?"a":"div"}>`;
     }).join("")}</div>` : "";
-    $("#list").innerHTML = list.map((u,i)=>userRow(u,i,o)).join("");
+    $("#list").innerHTML = list.map((u,i)=>userRow(u,i,o,items)).join("");
   } catch(e){ $("#list").innerHTML = `<div class="err">${esc(e.message)} · ลองรีเฟรชหน้าอีกครั้ง</div>`; }
 }
 
 async function pageProfile(username){
   view.innerHTML = `<div class="cover"></div>${skel(4)}`;
-  let p;
-  try { p = await rpc("web_profile", { p_username: username }); }
+  let p, items;
+  try { [p, items] = await Promise.all([rpc("web_profile", { p_username: username }), deco()]); }
   catch(e){ view.innerHTML = `<div class="err">${esc(e.message)}</div>`; return; }
   if (!p) { view.innerHTML = `<div class="empty"><h2>ไม่พบผู้ใช้ @${esc(username)}</h2><p>ลองค้นหาด้วยชื่ออื่นในหน้า <a href="#/search">ค้นหาผู้ใช้</a></p></div>`; return; }
   document.title = `${p.name} — Melo Vault`;
-  const r = rankOf(p.rank_points), bg = fileUrl(p.background);
+  const r = rankOf(p.rank_points);
+  // พื้นหลังโปรไฟล์: ของตกแต่ง (ขยับได้) → รูปปกที่อัปโหลดเอง → สีไล่ระดับ
+  const pbg = decoImg(items, p.profile_bg, "bg");
+  const own = fileUrl(p.background);
+  const coverInner = pbg?.img
+    ? (pbg.video && !reduceMotion
+        ? `<video autoplay muted loop playsinline poster="${esc(pbg.img)}" src="${esc(pbg.video)}"></video>`
+        : `<img class="bgimg" src="${esc(pbg.img)}" alt="">`)
+    : (own ? `<img class="bgimg" src="${esc(own)}" alt="">` : "");
+  const titleImg = decoImg(items, p.title_asset);
+  // ป้ายชื่อ: ของร้าน (รูป) / สีเดียว c:RRGGBB / ไล่สี g:AAAAAA-BBBBBB
+  const np = p.nameplate || "";
+  let plateStyle = "";
+  const plateImg = decoImg(items, p.nameplate_asset);
+  if (plateImg) plateStyle = `background-image:url('${esc(plateImg)}')`;
+  else if (np.startsWith("c:")) plateStyle = `background:#${esc(np.slice(2))}`;
+  else if (np.startsWith("g:")) { const [c1,c2] = np.slice(2).split("-"); plateStyle = `background:linear-gradient(90deg,#${esc(c1)},#${esc(c2)})`; }
   const joined = p.joined ? new Date(p.joined).toLocaleDateString("th-TH", { year:"numeric", month:"long", day:"numeric" }) : "";
   const days = p.days || [];
   const max = Math.max(1, ...days.map(d=>d.minutes||0));
@@ -425,14 +539,22 @@ async function pageProfile(username){
     <div class="stat"><b>${num(p.songs)}</b><span>เพลงที่ฟังแล้ว</span></div>
     <div class="stat"><b>${num(p.streak)}</b><span>วันต่อเนื่อง</span></div>
     <div class="stat"><b>${num(p.credits)}</b><span>เครดิต</span></div>`;
+  const show = (p.showcase || []).map(x => { const u = decoImg(items, x.asset, "preview"); return u ? `<figure><img src="${esc(u)}" alt="" loading="lazy"><figcaption>${esc(x.name)}</figcaption></figure>` : ""; }).join("");
+  const clips = p.clips || [];
   view.innerHTML = `
-    <div class="cover" ${bg?`style="background-image:url('${esc(bg)}')"`:""}></div>
-    <div class="phead">${avatar(p)}
-      <div><h1>${esc(p.name)}${p.vip?'<span class="vip">VIP</span>':""}</h1>
+    <div class="cover">${coverInner}</div>
+    <div class="phead">${favatar(p, items)}
+      <div><h1><span class="plate ${plateStyle?"has":""}" style="${plateStyle}">${esc(p.name)}</span>${p.vip?'<span class="vip">VIP</span>':""}</h1>
       <div class="handle">@${esc(p.username)}${joined?` · เข้าร่วม ${esc(joined)}`:""}</div>
-      ${p.title?`<span class="title-chip">${esc(p.title)}</span>`:""}</div>
+      ${titleImg ? `<img class="title-img" src="${esc(titleImg)}" alt="${esc(p.title||"")}">` : (p.title?`<span class="title-chip">${esc(p.title)}</span>`:"")}</div>
     </div>
     ${p.bio?`<p class="bio">${esc(p.bio)}</p>`:""}
+    ${show?`<div class="show" aria-label="ของสะสม">${show}</div>`:""}
+    ${clips.length ? `<section class="panel" style="margin-top:22px"><div class="panel-h"><h2 style="font-size:19px">เพลงประจำโปรไฟล์</h2><span class="muted" style="font-size:14px">${clips.length} เพลง</span></div>
+      <div class="clips">${clips.map((c,i)=>{ const cv = fileUrl(c.cover, "covers");
+        return `<div class="clip" data-i="${i}">${cv?`<img src="${esc(cv)}" alt="" loading="lazy">`:`<span class="cv"></span>`}
+          <div style="min-width:0"><b>${esc(c.title)}</b><span>${esc(c.artist)}</span><div class="pr"><i></i></div></div>
+          <button class="play" aria-label="เล่น ${esc(c.title)}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button></div>`; }).join("")}</div></section>` : ""}
     <div class="pgrid">
       <section class="rankcard" aria-label="แรงค์">
         <div style="opacity:.8">แรงค์ ${p.rank_pos?`· อันดับที่ ${num(p.rank_pos)}`:""}</div>
@@ -449,6 +571,21 @@ async function pageProfile(username){
     </div>
     ${!p.hide_stats && days.length ? `<section class="panel" style="margin-top:20px"><div class="panel-h"><h2 style="font-size:19px">14 วันที่ผ่านมา</h2><span class="muted" style="font-size:14px">นาทีต่อวัน</span></div>
       <div class="days">${days.map(d=>{ const dt = new Date(d.day+"T00:00:00"); return `<div title="${num(d.minutes)} นาที"><i style="height:${Math.max(2,(d.minutes||0)/max*100)}%"></i><span>${dt.getDate()}</span></div>`; }).join("")}</div></section>` : ""}`;
+  // เล่นเพลงประจำโปรไฟล์ (ทีละเพลง แตะซ้ำ = หยุด)
+  const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>', STOP = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 6h3.5v12H7zM13.5 6H17v12h-3.5z"/></svg>';
+  view.querySelectorAll(".clip").forEach(el => el.querySelector(".play").addEventListener("click", () => {
+    const i = +el.dataset.i, c = clips[i];
+    if (window.__clip && window.__clip.i === i && !window.__clip.a.paused) { window.__clip.a.pause(); return; }
+    window.__clip?.a.pause();
+    const a = new Audio(fileUrl(c.clip, "clips"));
+    window.__clip = { a, i };
+    const bar = el.querySelector(".pr i"), btn = el.querySelector(".play");
+    const off = () => { el.classList.remove("on"); btn.innerHTML = PLAY; bar.style.width = "0"; };
+    a.addEventListener("play", () => { view.querySelectorAll(".clip").forEach(x => { x.classList.remove("on"); x.querySelector(".play").innerHTML = PLAY; }); el.classList.add("on"); btn.innerHTML = STOP; });
+    a.addEventListener("pause", off); a.addEventListener("ended", off);
+    a.addEventListener("timeupdate", () => { bar.style.width = `${Math.min(100, a.currentTime / (a.duration || (c.ms/1000) || 20) * 100)}%`; });
+    a.play().catch(off);
+  }));
 }
 
 function pageSearch(q=""){
@@ -484,6 +621,7 @@ function route(){
   const key = a === "u" ? "board" : (a || "home");
   document.querySelectorAll(".nav a").forEach(x => x.toggleAttribute("aria-current", false) || (x.dataset.r === key && x.setAttribute("aria-current","page")));
   window.scrollTo(0,0);
+  window.__clip?.a.pause();
   if (a === "board") return pageBoard(b || "rank");
   if (a === "u" && b) return pageProfile(b);
   if (a === "search") return pageSearch(b);
